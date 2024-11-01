@@ -1,0 +1,23 @@
+#lake th {
+    font-size: 1.6em;
+}
+
+#lake td {
+    padding: 0;
+}
+
+#lake td .frog{
+    width: 100%;
+}
+
+.cell {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.cell input[type="checkbox"] {
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+}

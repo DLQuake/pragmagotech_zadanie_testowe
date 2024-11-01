@@ -1,0 +1,35 @@
+.frog {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    width: 60px;
+    position: relative;
+    background-color: #3D9970;
+}
+
+.frog input[type="checkbox"] {
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+}
+
+.frog.male:after,
+.frog.female:after {
+    content: " ";
+    display: block;
+    height: 10px;
+    width: 10px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+
+.frog.male:after {
+    background-color: #0074D9;
+}
+
+.frog.female:after {
+    background-color: #85144B;
+}
