@@ -1,6 +1,6 @@
 const TaskContent = () => {
     return (
-        <div className="content notification">
+        <div className="content box notification">
             Below is a lake with dimensions 10x6 fields. Frogs are marked as green rectangles. Frog with a small blue rectangle is a male; with a purple rectangle female.<br /><br />
 
             <strong>Acceptance criteria:</strong><br />
