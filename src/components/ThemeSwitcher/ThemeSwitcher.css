@@ -1,0 +1,27 @@
+.theme-switcher {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.theme-button {
+    border: none;
+    background-color: transparent;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: inherit;
+}
+
+.theme-button i {
+    transition: color 0.3s ease;
+}
+
+/* ThemeSwitcher.css */
+.custom-confirm-button {
+    background-color: #00D1B2 !important;
+    color: #000 !important;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+}
