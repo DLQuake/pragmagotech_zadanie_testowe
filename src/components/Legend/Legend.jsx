@@ -7,12 +7,12 @@ const Legend = () => {
             <h3 className='title is-size-4'>Legend</h3>
             <ul>
                 <li>
-                    <Frog type="male" />
-                    <strong>Male Frog</strong>
+                    <Frog type="male" showTooltip={false} />
+                    <strong>Frog Male</strong>
                 </li>
                 <li>
-                    <Frog type="female" />
-                    <strong>Female Frog</strong>
+                    <Frog type="female" showTooltip={false} />
+                    <strong>Frog Female</strong>
                 </li>
             </ul>
         </div>

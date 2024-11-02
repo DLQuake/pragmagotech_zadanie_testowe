@@ -1,15 +1,13 @@
 .legend {
     border-radius: 5px;
-    max-width: 240px;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
 .legend ul {
-    text-align: center;
     display: flex;
-    list-style: none;
+    justify-content: center;
     gap: 20px;
     padding: 0;
     margin: 0;
@@ -20,4 +18,16 @@
     align-items: center;
     flex-direction: column;
     margin-bottom: 10px;
+}
+
+.legend li .frog {
+    cursor: default;
+}
+
+.legend li .frog:hover {
+    opacity: 1;
+}
+
+.legend li .frog input[type="checkbox"] {
+    display: none;
 }
