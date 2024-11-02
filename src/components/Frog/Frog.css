@@ -4,8 +4,14 @@
     align-items: center;
     height: 60px;
     width: 60px;
+    padding: 20px;
     position: relative;
     background-color: #3D9970;
+    cursor: pointer;
+}
+
+.frog:hover {
+    opacity: 0.8;
 }
 
 .frog input[type="checkbox"] {
