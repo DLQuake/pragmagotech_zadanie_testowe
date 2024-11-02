@@ -1,3 +1,5 @@
+import './Controls.css'
+
 const Controls = ({ onJump, onReproduce }) => {
     return (
         <div className="mt-5">
