@@ -1,0 +1,10 @@
+.section .container .columns {
+    display: flex;
+    gap: 25px;
+}
+
+@media only screen and (max-width: 768px) {
+    .section .container .columns {
+        flex-direction: column;
+    }
+}
