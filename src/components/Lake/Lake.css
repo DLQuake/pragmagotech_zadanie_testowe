@@ -1,5 +1,6 @@
 #lake th {
     font-size: 1.6em;
+    text-align: center;
 }
 
 #lake td {
@@ -8,12 +9,18 @@
 
 #lake td .frog{
     width: 100%;
+    height: 100%;
 }
 
 .cell {
     display: flex;
     justify-content: center;
     padding: 20px;
+    cursor: pointer;
+}
+
+.cell:hover {
+    background-color: #7FD9FF;
 }
 
 .cell input[type="checkbox"] {

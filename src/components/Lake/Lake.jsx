@@ -1,9 +1,9 @@
-import Frog from '../Frog/Frog';
 import './Lake.css';
+import Frog from '../Frog/Frog';
 
 const Lake = ({ frogs, onSelectFrog, onSelectEmptyField, selectedCells }) => {
-    const lakeCols = 10;
     const lakeRows = 6;
+    const lakeCols = 10;
 
     const handleCellSelect = (row, col) => {
         const frog = frogs.find(f => f.row === row && f.col === col);
@@ -16,10 +16,10 @@ const Lake = ({ frogs, onSelectFrog, onSelectEmptyField, selectedCells }) => {
 
     return (
         <div className="table-container">
-            <table className="table is-bordered is-striped is-fullwidth is-narrow" id="lake">
+            <table id="lake" className='table is-fullwidth is-bordered'>
                 <thead>
                     <tr>
-                        <th colSpan={lakeCols} className="has-text-centered">Lake</th>
+                        <th colSpan={lakeCols}>Lake</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,12 +30,14 @@ const Lake = ({ frogs, onSelectFrog, onSelectEmptyField, selectedCells }) => {
                                 const isSelected = selectedCells.some(cell => cell.row === rowIndex && cell.col === colIndex);
 
                                 return (
-                                    <td key={`${rowIndex}-${colIndex}`} className={`has-text-centered ${isSelected ? 'selected' : ''}`}>
+                                    <td key={`${rowIndex}-${colIndex}`} className="has-text-centered">
                                         {frog ? (
                                             <Frog
+                                                id={frog.id}
                                                 type={frog.type}
                                                 isSelected={isSelected}
                                                 onSelect={() => handleCellSelect(rowIndex, colIndex)}
+                                                characteristics={frog.characteristics}
                                             />
                                         ) : (
                                             <label className={`cell ${isSelected ? 'selected' : ''}`}>
@@ -44,7 +46,6 @@ const Lake = ({ frogs, onSelectFrog, onSelectEmptyField, selectedCells }) => {
                                                     checked={isSelected}
                                                     onChange={() => handleCellSelect(rowIndex, colIndex)}
                                                 />
-                                                <span className={`checkbox ${isSelected ? 'is-checked' : ''}`}></span>
                                             </label>
                                         )}
                                     </td>
