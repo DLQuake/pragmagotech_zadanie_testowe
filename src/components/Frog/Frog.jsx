@@ -1,11 +1,10 @@
-// src/components/Frog/Frog.jsx
 import './Frog.css';
 
 const Frog = ({ id, type, isSelected, onSelect, characteristics = [], showTooltip = true }) => {
     return (
         <label
             className={`frog ${type} ${isSelected ? 'selected' : ''}`}
-            title={showTooltip ? `ID: ${id}\nType: ${type}\nCharacteristics: ${characteristics.join(', ')}` : ''} // Dodanie warunku dla title
+            title={showTooltip ? `ID: ${id}\nType: ${type}\nCharacteristics: ${characteristics.join(', ')}` : ''}
         >
             <input
                 type="checkbox"
