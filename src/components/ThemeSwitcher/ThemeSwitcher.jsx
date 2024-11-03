@@ -18,7 +18,7 @@ function ThemeSwitcher() {
 
     return (
         <div className="theme-switcher">
-            <button className="button is-medium theme-button" onClick={toggleTheme}>
+            <button className="button is-large theme-button" onClick={toggleTheme}>
                 {theme === "light" ? (
                     <FaMoon size={24} color="#6a0dad" />
                 ) : (
