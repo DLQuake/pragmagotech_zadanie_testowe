@@ -2,9 +2,9 @@ import Controls from './components/Controls/Controls';
 import TaskContent from './components/TaskContent/TaskContent';
 import Legend from './components/Legend/Legend';
 import Lake from './components/Lake/Lake';
-import './App.css';
 import ThemeSwitcher from './components/ThemeSwitcher/ThemeSwitcher';
-import useFrogGame from './hooks/useFrogGame';
+import { useFrogGame } from './hooks/useFrogGame';
+import './App.css';
 
 function App() {
 	const {

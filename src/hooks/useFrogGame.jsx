@@ -1,21 +1,28 @@
 import { useState } from 'react';
-import Swal from 'sweetalert2';
+import CustomAlert from '../components/CustomAlert/CustomAlert';
 
-const useFrogGame = () => {
+export const useFrogGame = () => {
     const [selectedCells, setSelectedCells] = useState([]);
+    const traits = {
+        height: ['tall', 'short'],
+        width: ['slim', 'fat'],
+    };
     const [frogs, setFrogs] = useState([
-        { id: 1, row: 0, col: 0, type: 'male', characteristics: ['tall', 'slim'] },
-        { id: 2, row: 0, col: 1, type: 'female', characteristics: ['short', 'fat'] },
+        { id: 1, row: 0, col: 0, type: 'male', characteristics: [traits.height[0], traits.width[0]] },
+        { id: 2, row: 0, col: 1, type: 'female', characteristics: [traits.height[1], traits.width[1]] },
     ]);
 
     const handleSelectFrog = (frog) => {
-        if (selectedCells.some(cell => cell.frog.id === frog.id)) {
-            setSelectedCells(selectedCells.filter(cell => cell.frog.id !== frog.id));
-        } else {
-            if (selectedCells.length < 2) {
-                setSelectedCells([...selectedCells, { row: frog.row, col: frog.col, frog }]);
+        setSelectedCells(prevSelectedCells => {
+            const alreadySelected = prevSelectedCells.some(cell => cell.frog.id === frog.id);
+            if (alreadySelected) {
+                return prevSelectedCells.filter(cell => cell.frog.id !== frog.id);
             }
-        }
+            if (prevSelectedCells.length < 2) {
+                return [...prevSelectedCells, { row: frog.row, col: frog.col, frog }];
+            }
+            return prevSelectedCells;
+        });
     };
 
     const handleSelectEmptyField = (row, col) => {
@@ -38,16 +45,10 @@ const useFrogGame = () => {
         const rowDiff = Math.abs(from.row - to.row);
         const colDiff = Math.abs(from.col - to.col);
 
-        if (frog.type === 'male') {
-            return (rowDiff <= 3 && colDiff <= 3) &&
-                (rowDiff === colDiff || rowDiff === 0 || colDiff === 0 || (rowDiff + colDiff <= 3))
-        }
+        const limits = frog.type === 'male' ? { maxRow: 3, maxCol: 3 } : { maxRow: 2, maxCol: 2 };
 
-        if (frog.type === 'female') {
-            return (rowDiff <= 2 && colDiff <= 2) &&
-                (rowDiff === colDiff || rowDiff === 0 || colDiff === 0 || (rowDiff + colDiff <= 2))
-        }
-        return false;
+        return (rowDiff <= limits.maxRow && colDiff <= limits.maxCol) &&
+            (rowDiff === colDiff || rowDiff === 0 || colDiff === 0 || (rowDiff + colDiff <= Math.max(limits.maxRow, limits.maxCol)));
     };
 
     const handleJump = () => {
@@ -61,11 +62,14 @@ const useFrogGame = () => {
                 if (!targetFrog) {
                     updateFrogPosition(oldRow, oldCol, to.row, to.col);
                 } else {
-                    Swal.fire('Cannot jump to an occupied cell.');
+                    CustomAlert('Cannot jump to an occupied cell.', 'error');
                 }
             } else {
-                Swal.fire('Cannot perform the jump.');
+                CustomAlert('Cannot perform the jump.', 'error');
             }
+        }
+        else {
+            CustomAlert('Select one frog and one empty field', 'warning');
         }
         setSelectedCells([]);
     };
@@ -83,16 +87,11 @@ const useFrogGame = () => {
             { row: row + 1, col: col + 1 }  // Bottom-right diagonal
         ];
 
-        for (const pos of adjacentPositions) {
-            if (
-                pos.row >= 0 && pos.row < 6 &&
-                pos.col >= 0 && pos.col < 10 &&
-                !frogs.some(frog => frog.row === pos.row && frog.col === pos.col)
-            ) {
-                return pos;
-            }
-        }
-        return null;
+        return adjacentPositions.find(pos =>
+            pos.row >= 0 && pos.row < 6 &&
+            pos.col >= 0 && pos.col < 10 &&
+            !frogs.some(frog => frog.row === pos.row && frog.col === pos.col)
+        ) || null;
     };
 
     const handleReproduce = () => {
@@ -100,12 +99,12 @@ const useFrogGame = () => {
             const [frog1, frog2] = selectedCells.map(cell => cell.frog).filter(Boolean);
 
             if (!frog1 || !frog2) {
-                Swal.fire("Please select two frogs to reproduce.");
+                CustomAlert("Please select two frogs to reproduce.", "warning");
                 return;
             }
 
             if (frog1.type === frog2.type) {
-                Swal.fire("Reproduction requires a male and a female frog.");
+                CustomAlert("Reproduction requires a male and a female frog.", "warning");
                 return;
             }
 
@@ -114,14 +113,27 @@ const useFrogGame = () => {
 
             const areAdjacent = Math.abs(frog1.row - frog2.row) <= 1 && Math.abs(frog1.col - frog2.col) <= 1;
             if (!areAdjacent) {
-                Swal.fire("The frogs must be adjacent to reproduce.");
+                CustomAlert("Frogs must neighbor each other to reproduce", "error");
                 return;
             }
 
             const emptyCell = findFirstAvailableAdjacentCell(femaleFrog.row, femaleFrog.col);
             if (!emptyCell) {
-                Swal.fire("No adjacent space available for a new frog.");
+                CustomAlert("No adjacent space available for a new frog.", "error");
                 return;
+            }
+
+            const heightTraitFromMale = maleFrog.characteristics.find(trait => traits.height.includes(trait));
+            const heightTraitFromFemale = femaleFrog.characteristics.find(trait => traits.height.includes(trait));
+
+            let heightTrait, widthTrait;
+
+            if (Math.random() > 0.5) {
+                heightTrait = heightTraitFromMale;
+                widthTrait = femaleFrog.characteristics.find(trait => traits.width.includes(trait));
+            } else {
+                heightTrait = heightTraitFromFemale;
+                widthTrait = maleFrog.characteristics.find(trait => traits.width.includes(trait));
             }
 
             const newFrog = {
@@ -129,15 +141,12 @@ const useFrogGame = () => {
                 row: emptyCell.row,
                 col: emptyCell.col,
                 type: Math.random() > 0.5 ? 'male' : 'female',
-                characteristics: [
-                    maleFrog.characteristics[Math.floor(Math.random() * maleFrog.characteristics.length)],
-                    femaleFrog.characteristics[Math.floor(Math.random() * femaleFrog.characteristics.length)]
-                ]
+                characteristics: [heightTrait, widthTrait]
             };
 
             setFrogs([...frogs, newFrog]);
         } else {
-            Swal.fire("Select a male and a female frog to reproduce.");
+            CustomAlert("Select a male and a female frog to reproduce.", "warning");
         }
         setSelectedCells([]);
     };
@@ -151,5 +160,3 @@ const useFrogGame = () => {
         handleReproduce,
     };
 };
-
-export default useFrogGame;
