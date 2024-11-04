@@ -8,8 +8,8 @@ const CustomAlert = (text, icon) => {
         title: text,
         icon: icon,
         background: darkMode ? '#14161A' : '#FFFFFF',
-        color: darkMode ? '#fff' : '#000',
-        confirmButtonColor: darkMode ? '#00B89C' : '#00B89C',
+        color: darkMode ? '#FFFFFF' : '#000000',
+        confirmButtonColor: '#00B89C',
     });
 };
 
