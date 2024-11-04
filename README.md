@@ -10,8 +10,6 @@ Frog Game is a fun and interactive game built using React. Players control frogs
 - [Technologies](#technologies)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
