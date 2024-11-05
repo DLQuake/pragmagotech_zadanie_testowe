@@ -32,7 +32,7 @@ function App() {
 						/>
 					</div>
 
-					<div className="column box notification is-2">
+					<div className="column box notification is-2 mt-5">
 						<Legend />
 						<Controls onJump={handleJump} onReproduce={handleReproduce} />
 					</div>

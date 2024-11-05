@@ -1,10 +1,16 @@
-.section .container .columns {
-    display: flex;
+.section > .container > .columns {
     gap: 25px;
 }
 
+.section > .container > .columns > .mt-5 {
+    margin-top: 0 !important;
+}
+
 @media only screen and (max-width: 768px) {
-    .section .container .columns {
+    .section > .container > .columns {
         flex-direction: column;
+    }
+    .section > .container > .columns > .mt-5 {
+        margin-top: 1.5rem !important
     }
 }
